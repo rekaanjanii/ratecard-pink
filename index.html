@@ -588,8 +588,8 @@
     }
 
     function loadFormValues() {
-        document.getElementById('binApiKey').value = apiKey;
-        document.getElementById('binId').value = binId;
+        document.getElementById('binApiKey').value = binId;
+        document.getElementById('binId').value = apiKey;
         document.getElementById('inputBg').value = config.bgUrl || '';
         document.getElementById('inputColor').value = config.themeColor || '#f472b6';
         document.getElementById('inputProfile').value = config.profileUrl || '';
@@ -625,8 +625,8 @@
         const statusText = document.getElementById('loadingStatus');
         statusText.style.display = 'block';
 
-        apiKey = document.getElementById('binApiKey').value.trim();
-        binId = document.getElementById('binId').value.trim();
+        apiKey = document.getElementById('binId').value.trim();
+        binId = document.getElementById('binApiKey').value.trim();
 
         localStorage.setItem('jsonbin_key', apiKey);
         localStorage.setItem('jsonbin_id', binId);
