@@ -488,21 +488,38 @@
     };
 
     // FUNGSI MEMUAT DATA ONLINE DARI CLOUD
-    async function loadDataFromDatabase() {
-        if (binId && apiKey) {
-            try {
-                const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
-                    method: 'GET',
-                    headers: {
-                        'X-Master-Key': apiKey
-                    }
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    config = data.record;
-                    localStorage.setItem('pink_ratecard_config', JSON.stringify(config));
+async function loadDataFromDatabase() {
+    if (binId && apiKey) {
+        try {
+            const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+                method: 'GET',
+                headers: {
+                    'X-Master-Key': apiKey,
+                    'X-Bin-Meta': 'false'
                 }
-            } catch (err) {
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                // Mengambil record dari JSONBin (atau 'data' jika X-Bin-Meta: false)
+                config = data.record || data;
+                
+                // Simpan ke memori lokal
+                localStorage.setItem('pink_ratecard_config', JSON.stringify(config));
+                
+                // PENTING: Panggil fungsi render agar tampilan UI langsung berubah!
+                if (typeof renderUI === 'function') {
+                    renderUI();
+                } else if (typeof applyDataToUI === 'function') {
+                    applyDataToUI(config);
+                }
+                return;
+            }
+        } catch (err) {
+            console.error("Gagal memuat data dari cloud:", err);
+        }
+    }
+}
                 console.log("Menggunakan data lokal...");
             }
         }
