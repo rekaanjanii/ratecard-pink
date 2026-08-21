@@ -213,7 +213,7 @@
 
         .btn-social:hover {
             background: #ffffff;
-            transform: translateY(-3deg);
+            transform: translateY(-3px);
             color: var(--text-accent);
             box-shadow: 0 8px 18px rgba(225, 29, 72, 0.15);
         }
@@ -455,7 +455,7 @@
 </div>
 
 <script>
-    // Konfigurasi Default awal
+    // Konfigurasi Default
     let config = {
         bgUrl: '',
         themeColor: '#f472b6',
@@ -479,89 +479,90 @@
 
     let isAdminLoggedIn = false;
 
-    // KUNCI DATABASE PUBLIC - Ganti dengan Kunci JSONBin Anda sendiri agar terhubung penuh
-    let binId ='6a88075df5f4af5e293045d0';
-    let apiKey ='$2a$10$RToIDZQyfCwAmmFIgopn6O1Nf2lOWMZy5cE7zwXLMHjagMg0EP5I';
+    // KUNCI DATABASE PUBLIC
+    let binId = '6a88075df5f4af5e293045d0';
+    let apiKey = '$2a$10$RToIDZQyfCwAmmFIgopn6O1Nf2lOWMZy5cE7zwXLMHjagMg0EP5I';
 
     window.onload = function() {
+        // 1. Memuat data dari cache lokal terlebih dahulu (Instant Load)
+        const savedData = localStorage.getItem('pink_ratecard_config');
+        if (savedData) {
+            try {
+                config = JSON.parse(savedData);
+                applySettingsToView();
+            } catch (e) {
+                console.error("Gagal parse cache lokal:", e);
+            }
+        }
+        
+        // 2. Memuat data terbaru dari Cloud secara async
         loadDataFromDatabase();
     };
 
     // FUNGSI MEMUAT DATA ONLINE DARI CLOUD
-async function loadDataFromDatabase() {
-    if (binId && apiKey) {
-        try {
-            const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
-                method: 'GET',
-                headers: {
-                    'X-Master-Key': apiKey,
-                    'X-Bin-Meta': 'false'
-                }
-            });
+    async function loadDataFromDatabase() {
+        if (binId && apiKey) {
+            try {
+                const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Master-Key': apiKey,
+                        'X-Bin-Meta': 'false'
+                    }
+                });
 
-            if (response.ok) {
-                const data = await response.json();
-                // Mengambil record dari JSONBin (atau 'data' jika X-Bin-Meta: false)
-                config = data.record || data;
-                
-                // Simpan ke memori lokal
-                localStorage.setItem('pink_ratecard_config', JSON.stringify(config));
-                
-                // PENTING: Panggil fungsi render agar tampilan UI langsung berubah!
-                if (typeof renderUI === 'function') {
-                    renderUI();
-                } else if (typeof applyDataToUI === 'function') {
-                    applyDataToUI(config);
+                if (response.ok) {
+                    const data = await response.json();
+                    config = data.record || data;
+                    
+                    // Simpan data terbaru ke memori lokal
+                    localStorage.setItem('pink_ratecard_config', JSON.stringify(config));
+                    
+                    // Render ulang tampilan dengan data cloud terbaru
+                    applySettingsToView();
+                    return;
                 }
-                return;
-            }
-        } catch (err) {
-            console.error("Gagal memuat data dari cloud:", err);
-        }
-    }
-}
-                console.log("Menggunakan data lokal...");
+            } catch (err) {
+                console.error("Gagal memuat data dari cloud:", err);
             }
         }
         
-        // Fallback jika database belum disetting
-        const savedData = localStorage.getItem('pink_ratecard_config');
-        if (savedData) {
-            config = JSON.parse(savedData);
-        }
+        // Fallback jika fetch gagal
         applySettingsToView();
     }
 
     function applySettingsToView() {
+        if (!config || !config.prices || !config.socials) return;
+
         if (config.bgUrl) {
             document.body.style.background = `url('${config.bgUrl}') center/cover fixed no-repeat`;
         } else {
             document.body.style.background = `linear-gradient(135deg, ${config.themeColor}33 0%, ${config.themeColor}99 100%), linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%)`;
         }
 
-        document.body.style.fontFamily = config.fontFamily;
+        document.body.style.fontFamily = config.fontFamily || "'Poppins', sans-serif";
         document.getElementById('displayProfile').src = config.profileUrl;
 
         // Apply Harga
-        document.getElementById('priceFb').innerText = 'Rp. ' + config.prices.fb;
-        document.getElementById('priceTiktok').innerText = 'Rp. ' + config.prices.tiktok;
-        document.getElementById('priceIg').innerText = 'Rp. ' + config.prices.ig;
-        document.getElementById('priceReelsFb').innerText = 'Rp. ' + config.prices.reelsFb;
-        document.getElementById('priceStory').innerText = 'Rp. ' + config.prices.story;
-        document.getElementById('priceAll').innerText = 'Rp. ' + config.prices.all;
+        document.getElementById('priceFb').innerText = 'Rp. ' + (config.prices.fb || '0');
+        document.getElementById('priceTiktok').innerText = 'Rp. ' + (config.prices.tiktok || '0');
+        document.getElementById('priceIg').innerText = 'Rp. ' + (config.prices.ig || '0');
+        document.getElementById('priceReelsFb').innerText = 'Rp. ' + (config.prices.reelsFb || '0');
+        document.getElementById('priceStory').innerText = 'Rp. ' + (config.prices.story || '0');
+        document.getElementById('priceAll').innerText = 'Rp. ' + (config.prices.all || '0');
 
         // Apply Sosmed
-        document.getElementById('textFb').innerText = config.socials.fb;
+        document.getElementById('textFb').innerText = config.socials.fb || 'Facebook';
         document.getElementById('linkFb').href = 'https://facebook.com/' + config.socials.fb;
 
-        document.getElementById('textTiktok').innerText = config.socials.tiktok;
+        document.getElementById('textTiktok').innerText = config.socials.tiktok || 'TikTok';
         document.getElementById('linkTiktok').href = 'https://tiktok.com/@' + config.socials.tiktok;
 
-        document.getElementById('textIg').innerText = config.socials.ig;
+        document.getElementById('textIg').innerText = config.socials.ig || 'Instagram';
         document.getElementById('linkIg').href = 'https://instagram.com/' + config.socials.ig;
 
         // Apply Notepad
-        document.getElementById('displayNotepad').innerText = config.notepad;
+        document.getElementById('displayNotepad').innerText = config.notepad || '';
     }
 
     function toggleAdminLogin() {
@@ -580,7 +581,7 @@ async function loadDataFromDatabase() {
                 document.getElementById('authBtn').innerText = 'Logout';
                 document.getElementById('adminPanel').style.display = 'block';
                 loadFormValues();
-            } else {
+            } else if (user !== null && pass !== null) {
                 alert("Username atau Password salah!");
             }
         }
@@ -589,23 +590,23 @@ async function loadDataFromDatabase() {
     function loadFormValues() {
         document.getElementById('binApiKey').value = apiKey;
         document.getElementById('binId').value = binId;
-        document.getElementById('inputBg').value = config.bgUrl;
-        document.getElementById('inputColor').value = config.themeColor;
-        document.getElementById('inputProfile').value = config.profileUrl;
-        document.getElementById('inputFont').value = config.fontFamily;
+        document.getElementById('inputBg').value = config.bgUrl || '';
+        document.getElementById('inputColor').value = config.themeColor || '#f472b6';
+        document.getElementById('inputProfile').value = config.profileUrl || '';
+        document.getElementById('inputFont').value = config.fontFamily || "'Poppins', sans-serif";
 
-        document.getElementById('inFb').value = config.prices.fb;
-        document.getElementById('inTiktok').value = config.prices.tiktok;
-        document.getElementById('inIg').value = config.prices.ig;
-        document.getElementById('inReelsFb').value = config.prices.reelsFb;
-        document.getElementById('inStory').value = config.prices.story;
-        document.getElementById('inAll').value = config.prices.all;
+        document.getElementById('inFb').value = config.prices.fb || '';
+        document.getElementById('inTiktok').value = config.prices.tiktok || '';
+        document.getElementById('inIg').value = config.prices.ig || '';
+        document.getElementById('inReelsFb').value = config.prices.reelsFb || '';
+        document.getElementById('inStory').value = config.prices.story || '';
+        document.getElementById('inAll').value = config.prices.all || '';
 
-        document.getElementById('inUserFb').value = config.socials.fb;
-        document.getElementById('inUserTiktok').value = config.socials.tiktok;
-        document.getElementById('inUserIg').value = config.socials.ig;
+        document.getElementById('inUserFb').value = config.socials.fb || '';
+        document.getElementById('inUserTiktok').value = config.socials.tiktok || '';
+        document.getElementById('inUserIg').value = config.socials.ig || '';
 
-        document.getElementById('inNotepad').value = config.notepad;
+        document.getElementById('inNotepad').value = config.notepad || '';
     }
 
     function uploadProfileImage(event) {
@@ -619,7 +620,7 @@ async function loadDataFromDatabase() {
         }
     }
 
-    // FUNGSI SIMPAN KE CLOUD DATABASE ONLINES
+    // FUNGSI SIMPAN KE CLOUD DATABASE ONLINE
     async function saveAdminSettings() {
         const statusText = document.getElementById('loadingStatus');
         statusText.style.display = 'block';
@@ -635,22 +636,26 @@ async function loadDataFromDatabase() {
         config.profileUrl = document.getElementById('inputProfile').value;
         config.fontFamily = document.getElementById('inputFont').value;
 
-        config.prices.fb = document.getElementById('inFb').value;
-        config.prices.tiktok = document.getElementById('inTiktok').value;
-        config.prices.ig = document.getElementById('inIg').value;
-        config.prices.reelsFb = document.getElementById('inReelsFb').value;
-        config.prices.story = document.getElementById('inStory').value;
-        config.prices.all = document.getElementById('inAll').value;
+        config.prices = {
+            fb: document.getElementById('inFb').value,
+            tiktok: document.getElementById('inTiktok').value,
+            ig: document.getElementById('inIg').value,
+            reelsFb: document.getElementById('inReelsFb').value,
+            story: document.getElementById('inStory').value,
+            all: document.getElementById('inAll').value
+        };
 
-        config.socials.fb = document.getElementById('inUserFb').value;
-        config.socials.tiktok = document.getElementById('inUserTiktok').value;
-        config.socials.ig = document.getElementById('inUserIg').value;
+        config.socials = {
+            fb: document.getElementById('inUserFb').value,
+            tiktok: document.getElementById('inUserTiktok').value,
+            ig: document.getElementById('inUserIg').value
+        };
 
         config.notepad = document.getElementById('inNotepad').value;
 
         localStorage.setItem('pink_ratecard_config', JSON.stringify(config));
 
-        // Update ke Cloud Server via JSONBin jika Key diisi
+        // Update ke Cloud Server via JSONBin
         if (binId && apiKey) {
             try {
                 const response = await fetch(`https://api.jsonbin.io/v3/b/${binId}`, {
@@ -671,7 +676,7 @@ async function loadDataFromDatabase() {
                 alert('Gagal terhubung ke Database online.');
             }
         } else {
-            alert('Pengaturan disimpan lokal di perangkat ini. Untuk menyimpan secara publik ke semua pelihat, isi API Key & Bin ID JSONBin.');
+            alert('Pengaturan disimpan lokal di perangkat ini.');
         }
 
         statusText.style.display = 'none';
