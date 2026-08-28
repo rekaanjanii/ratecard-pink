@@ -316,10 +316,18 @@
     @media (max-width: 600px) {
       .container { padding: 25px; border-radius: 20px; }
       .header-title { font-size: 1.8rem; }
-      .profile-img { width: 120px; height: 120px; }
-      .rate-grid { grid-template-columns: 1fr; }
-      .rate-price { font-size: 1.2rem; }
-    }
+      .profile-img { 
+    width: 170px; 
+    height: 170px; 
+    cursor: pointer; 
+    transition: transform 0.2s ease;
+  }
+  .profile-img:hover {
+    transform: scale(1.05);
+  }
+  .rate-grid { grid-template-columns: 1fr; }
+  .rate-price { font-size: 1.2rem; }
+}
   </style>
 </head>
 <body>
