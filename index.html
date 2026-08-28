@@ -12,7 +12,6 @@
 
   <style>
     :root {
-      /* Palette Nuansa Girl Profesional */
       --bg-color-default: #fff5f8;
       --card-bg-default: rgba(255, 255, 255, 0.9);
       --primary-text: #4a4a4a;
@@ -21,8 +20,6 @@
       --text-on-accent: #ffffff;
       --shadow-soft: 0 10px 30px rgba(228, 161, 169, 0.15);
       --glass-bg: rgba(255, 255, 255, 0.5);
-      
-      /* Dynamic Font Variable */
       --custom-font: 'Poppins', sans-serif;
     }
 
@@ -43,7 +40,6 @@
       transition: all 0.3s ease;
     }
 
-    /* Top Navigation (Admin Button) */
     .nav-bar {
       width: 100%;
       max-width: 800px;
@@ -72,7 +68,6 @@
     .btn-danger { background: #ff7675; color: white; box-shadow: 0 4px 15px rgba(255, 118, 117, 0.3); }
     .btn-danger:hover { background: #e84393; }
 
-    /* Main Container */
     .container {
       width: 100%;
       max-width: 800px;
@@ -87,18 +82,17 @@
     }
 
     .container::before {
-        content: '';
-        position: absolute;
-        top: -50px;
-        right: -50px;
-        width: 150px;
-        height: 150px;
-        background: rgba(228, 161, 169, 0.1);
-        border-radius: 50%;
-        z-index: 0;
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      background: rgba(228, 161, 169, 0.1);
+      border-radius: 50%;
+      z-index: 0;
     }
 
-    /* Header */
     .header-title {
       text-align: center;
       font-size: 2.5rem;
@@ -126,7 +120,6 @@
       50% { transform: translateY(-10px) rotate(5deg); }
     }
 
-    /* Profile */
     .profile-section {
       display: flex;
       justify-content: center;
@@ -147,7 +140,6 @@
     
     .profile-img:hover { transform: scale(1.05); }
 
-    /* Rate Grid */
     .rate-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -194,16 +186,15 @@
       text-align: right;
     }
 
-    /* Details Area */
     .details-area {
-        background: var(--glass-bg);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 25px;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        position: relative;
-        z-index: 1;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      position: relative;
+      z-index: 1;
     }
 
     .social-links {
@@ -231,9 +222,9 @@
     }
 
     .social-btn:hover { 
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-        border-color: rgba(228, 161, 169, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+      border-color: rgba(228, 161, 169, 0.2);
     }
 
     .fa-facebook { color: #1877f2; }
@@ -243,13 +234,13 @@
     .fa-share-nodes { color: var(--accent-color); }
 
     .notepad-container h4 {
-        color: var(--accent-color);
-        margin-bottom: 10px;
-        font-size: 1.1rem;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+      color: var(--accent-color);
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .notepad {
@@ -265,7 +256,6 @@
 
     #admin-action-area { position: relative; z-index: 1; }
 
-    /* Modal Form Admin */
     .modal {
       display: none;
       position: fixed;
@@ -315,8 +305,8 @@
     }
     
     .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-        border-color: var(--accent-color);
-        background: #ffffff;
+      border-color: var(--accent-color);
+      background: #ffffff;
     }
 
     .modal-content::-webkit-scrollbar { width: 8px; }
@@ -324,11 +314,11 @@
     .modal-content::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 10px; }
 
     @media (max-width: 600px) {
-        .container { padding: 25px; border-radius: 20px; }
-        .header-title { font-size: 1.8rem; }
-        .profile-img { width: 120px; height: 120px; }
-        .rate-grid { grid-template-columns: 1fr; }
-        .rate-price { font-size: 1.2rem; }
+      .container { padding: 25px; border-radius: 20px; }
+      .header-title { font-size: 1.8rem; }
+      .profile-img { width: 120px; height: 120px; }
+      .rate-grid { grid-template-columns: 1fr; }
+      .rate-price { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -350,43 +340,43 @@
     </div>
 
     <div class="rate-grid">
-        <div class="rate-card">
-            <div class="rate-platform"><i class="fa-brands fa-facebook"></i> FACEBOOK</div>
-            <div class="rate-price" id="view-fb-price">Rp. 0</div>
-        </div>
-        <div class="rate-card">
-            <div class="rate-platform"><i class="fa-brands fa-tiktok"></i> TIKTOK</div>
-            <div class="rate-price" id="view-tt-price">Rp. 0</div>
-        </div>
-        <div class="rate-card">
-            <div class="rate-platform"><i class="fa-brands fa-instagram"></i> INSTAGRAM</div>
-            <div class="rate-price" id="view-ig-price">Rp. 0</div>
-        </div>
-        <div class="rate-card">
-            <div class="rate-platform"><i class="fa-brands fa-facebook"></i> REELS FB</div>
-            <div class="rate-price" id="view-reels-price">Rp. 0</div>
-        </div>
-        <div class="rate-card">
-            <div class="rate-platform"><i class="fa-solid fa-circle-play"></i> Only Story</div>
-            <div class="rate-price" id="view-story-price">Rp. 0</div>
-        </div>
-        <div class="rate-card">
-            <div class="rate-platform"><i class="fa-solid fa-share-nodes"></i> ALL SOSMED</div>
-            <div class="rate-price" id="view-all-price">Rp. 0</div>
-        </div>
+      <div class="rate-card">
+        <div class="rate-platform"><i class="fa-brands fa-facebook"></i> FACEBOOK</div>
+        <div class="rate-price" id="view-fb-price">Rp. 0</div>
+      </div>
+      <div class="rate-card">
+        <div class="rate-platform"><i class="fa-brands fa-tiktok"></i> TIKTOK</div>
+        <div class="rate-price" id="view-tt-price">Rp. 0</div>
+      </div>
+      <div class="rate-card">
+        <div class="rate-platform"><i class="fa-brands fa-instagram"></i> INSTAGRAM</div>
+        <div class="rate-price" id="view-ig-price">Rp. 0</div>
+      </div>
+      <div class="rate-card">
+        <div class="rate-platform"><i class="fa-brands fa-facebook"></i> REELS FB</div>
+        <div class="rate-price" id="view-reels-price">Rp. 0</div>
+      </div>
+      <div class="rate-card">
+        <div class="rate-platform"><i class="fa-solid fa-circle-play"></i> Only Story</div>
+        <div class="rate-price" id="view-story-price">Rp. 0</div>
+      </div>
+      <div class="rate-card">
+        <div class="rate-platform"><i class="fa-solid fa-share-nodes"></i> ALL SOSMED</div>
+        <div class="rate-price" id="view-all-price">Rp. 0</div>
+      </div>
     </div>
 
     <div class="details-area">
-        <div class="social-links">
-          <a id="link-fb" href="#" target="_blank" class="social-btn"><i class="fa-brands fa-facebook"></i> <span id="view-fb-name">Facebook</span></a>
-          <a id="link-tt" href="#" target="_blank" class="social-btn"><i class="fa-brands fa-tiktok"></i> <span id="view-tt-name">TikTok</span></a>
-          <a id="link-ig" href="#" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> <span id="view-ig-name">Instagram</span></a>
-        </div>
+      <div class="social-links">
+        <a id="link-fb" href="#" target="_blank" class="social-btn"><i class="fa-brands fa-facebook"></i> <span id="view-fb-name">Facebook</span></a>
+        <a id="link-tt" href="#" target="_blank" class="social-btn"><i class="fa-brands fa-tiktok"></i> <span id="view-tt-name">TikTok</span></a>
+        <a id="link-ig" href="#" target="_blank" class="social-btn"><i class="fa-brands fa-instagram"></i> <span id="view-ig-name">Instagram</span></a>
+      </div>
 
-        <div class="notepad-container">
-          <h4><i class="fa-solid fa-note-sticky"></i> Catatan Ketentuan</h4>
-          <div id="view-notepad" class="notepad">Belum ada catatan.</div>
-        </div>
+      <div class="notepad-container">
+        <h4><i class="fa-solid fa-note-sticky"></i> Catatan Ketentuan</h4>
+        <div id="view-notepad" class="notepad">Memuat data online...</div>
+      </div>
     </div>
 
     <div id="admin-action-area" style="margin-top:30px; display:none; text-align:center;">
@@ -457,74 +447,104 @@
       <div class="form-group"><textarea id="set-notepad" rows="5"></textarea></div>
 
       <div style="position: sticky; bottom: 0; background: white; padding-top: 10px; padding-bottom: 10px; border-top: 1px solid #eee; margin-top: 20px;">
-        <button class="btn" onclick="saveAdminSettings()" style="width:100%; background:#10b981; justify-content: center;">Simpan Perubahan</button>
+        <button class="btn" onclick="saveAdminSettings()" style="width:100%; background:#10b981; justify-content: center;">Simpan Perubahan Online</button>
         <button class="btn btn-danger" onclick="closeModal('modal-admin')" style="width:100%; justify-content: center; margin-top:10px;">Tutup</button>
       </div>
     </div>
   </div>
 
   <script>
-    const defaultData = {
-      bgUrl: '', 
-      cardBg: '#ffffff', 
-      font: "'Poppins', sans-serif",
-      profileUrl: 'https://via.placeholder.com/150/e4a1a9/ffffff?text=Girl+Pro',
-      fbPrice: '150.000', ttPrice: '250.000', igPrice: '200.000',
-      reelsPrice: '100.000', storyPrice: '75.000', allPrice: '600.000',
-      fbName: 'Official Facebook', fbLink: 'https://facebook.com',
-      ttName: '@username.tiktok', ttLink: 'https://tiktok.com',
-      igName: '@username.ig', igLink: 'https://instagram.com',
-      notepad: 'Terima kasih telah tertarik untuk berkolaborasi!\n\nKetentuan Umum:\n1. Konten keep 30 hari.\n2. Payment wajib dilakukan upfront (DP 50% atau Pelunasan).\n3. Revisi maksimal 1x sebelum posting.'
-    };
+    // GANTI BAGIAN INI DENGAN DATA DARI JSONBIN.IO ANDA
+    const BIN_ID = '6a911934da38895dfe1adf2f';
+    const MASTER_KEY = '$2a$10$RToIDZQyfCwAmmFIgopn6O1Nf2lOWMZy5cE7zwXLMHjagMg0EP5I.';
 
-    function loadData() {
-      const data = JSON.parse(localStorage.getItem('ratecard_data_v3')) || defaultData;
-      
-      // Update Style & Font secara menyeluruh
-      if(data.bgUrl) {
-          document.body.style.backgroundImage = `url('${data.bgUrl}')`;
-      } else {
+    let currentData = {};
+
+    async function loadData() {
+      try {
+        const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+          headers: { 'X-Master-Key': MASTER_KEY }
+        });
+        const result = await response.json();
+        currentData = result.record;
+
+        if (currentData.bgUrl) {
+          document.body.style.backgroundImage = `url('${currentData.bgUrl}')`;
+        } else {
           document.body.style.backgroundImage = 'none';
           document.body.style.backgroundColor = 'var(--bg-color-default)';
+        }
+
+        document.documentElement.style.setProperty('--card-bg-default', currentData.cardBg || '#ffffff');
+        document.documentElement.style.setProperty('--custom-font', currentData.font || "'Poppins', sans-serif");
+        document.body.style.fontFamily = currentData.font || "'Poppins', sans-serif";
+
+        document.getElementById('view-profile').src = currentData.profileUrl || 'https://via.placeholder.com/150';
+        document.getElementById('view-fb-price').innerText = 'Rp. ' + (currentData.fbPrice || '0');
+        document.getElementById('view-tt-price').innerText = 'Rp. ' + (currentData.ttPrice || '0');
+        document.getElementById('view-ig-price').innerText = 'Rp. ' + (currentData.igPrice || '0');
+        document.getElementById('view-reels-price').innerText = 'Rp. ' + (currentData.reelsPrice || '0');
+        document.getElementById('view-story-price').innerText = 'Rp. ' + (currentData.storyPrice || '0');
+        document.getElementById('view-all-price').innerText = 'Rp. ' + (currentData.allPrice || '0');
+
+        document.getElementById('view-fb-name').innerText = currentData.fbName || 'Facebook';
+        document.getElementById('link-fb').href = currentData.fbLink || '#';
+        document.getElementById('view-tt-name').innerText = currentData.ttName || 'TikTok';
+        document.getElementById('link-tt').href = currentData.ttLink || '#';
+        document.getElementById('view-ig-name').innerText = currentData.igName || 'Instagram';
+        document.getElementById('link-ig').href = currentData.igLink || '#';
+
+        document.getElementById('view-notepad').innerText = currentData.notepad || 'Belum ada catatan.';
+      } catch (err) {
+        console.error("Gagal mengambil data dari database cloud:", err);
       }
-      
-      document.documentElement.style.setProperty('--card-bg-default', data.cardBg || '#ffffff');
-      
-      // Terapkan font terpilih ke CSS Root & Body
-      document.documentElement.style.setProperty('--custom-font', data.font);
-      document.body.style.fontFamily = data.font;
-
-      // Profile
-      document.getElementById('view-profile').src = data.profileUrl;
-
-      // Prices
-      document.getElementById('view-fb-price').innerText = 'Rp. ' + data.fbPrice;
-      document.getElementById('view-tt-price').innerText = 'Rp. ' + data.ttPrice;
-      document.getElementById('view-ig-price').innerText = 'Rp. ' + data.igPrice;
-      document.getElementById('view-reels-price').innerText = 'Rp. ' + data.reelsPrice;
-      document.getElementById('view-story-price').innerText = 'Rp. ' + data.storyPrice;
-      document.getElementById('view-all-price').innerText = 'Rp. ' + data.allPrice;
-
-      // Socials
-      document.getElementById('view-fb-name').innerText = data.fbName;
-      document.getElementById('link-fb').href = data.fbLink;
-      document.getElementById('view-tt-name').innerText = data.ttName;
-      document.getElementById('link-tt').href = data.ttLink;
-      document.getElementById('view-ig-name').innerText = data.igName;
-      document.getElementById('link-ig').href = data.igLink;
-
-      // Notepad
-      document.getElementById('view-notepad').innerText = data.notepad;
     }
 
-    // Handle Upload Foto Lokal
+    async function saveAdminSettings() {
+      const updatedData = {
+        font: document.getElementById('set-font').value,
+        bgUrl: document.getElementById('set-bg-url').value,
+        cardBg: document.getElementById('set-card-bg').value,
+        profileUrl: document.getElementById('set-profile-url').value,
+        fbPrice: document.getElementById('set-fb-price').value || '0',
+        ttPrice: document.getElementById('set-tt-price').value || '0',
+        igPrice: document.getElementById('set-ig-price').value || '0',
+        reelsPrice: document.getElementById('set-reels-price').value || '0',
+        storyPrice: document.getElementById('set-story-price').value || '0',
+        allPrice: document.getElementById('set-all-price').value || '0',
+        fbName: document.getElementById('set-fb-name').value || 'Facebook',
+        fbLink: document.getElementById('set-fb-link').value || '#',
+        ttName: document.getElementById('set-tt-name').value || 'TikTok',
+        ttLink: document.getElementById('set-tt-link').value || '#',
+        igName: document.getElementById('set-ig-name').value || 'Instagram',
+        igLink: document.getElementById('set-ig-link').value || '#',
+        notepad: document.getElementById('set-notepad').value || 'Tidak ada catatan.'
+      };
+
+      try {
+        await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Master-Key': MASTER_KEY
+          },
+          body: JSON.stringify(updatedData)
+        });
+        alert('Data berhasil diperbarui secara online untuk semua perangkat!');
+        closeModal('modal-admin');
+        loadData();
+      } catch (err) {
+        alert("Gagal meng-update data online.");
+      }
+    }
+
     document.getElementById('set-profile-file').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
         if (file.size > 2 * 1024 * 1024) {
-            alert("Ukuran file terlalu besar (Maks 2MB). Gunakan Link URL foto untuk hasil terbaik.");
-            this.value = "";
-            return;
+          alert("Ukuran file terlalu besar (Maks 2MB). Gunakan Link URL foto untuk hasil terbaik.");
+          this.value = "";
+          return;
         }
         const reader = new FileReader();
         reader.onload = function(evt) {
@@ -535,15 +555,15 @@
     });
 
     function openModal(id) {
-        const modal = document.getElementById(id);
-        modal.style.display = 'flex';
-        setTimeout(() => modal.classList.add('show'), 10);
+      const modal = document.getElementById(id);
+      modal.style.display = 'flex';
+      setTimeout(() => modal.classList.add('show'), 10);
     }
     
     function closeModal(id) {
-        const modal = document.getElementById(id);
-        modal.classList.remove('show');
-        setTimeout(() => modal.style.display = 'none', 300);
+      const modal = document.getElementById(id);
+      modal.classList.remove('show');
+      setTimeout(() => modal.style.display = 'none', 300);
     }
     
     function openLogin() { openModal('modal-login'); }
@@ -578,65 +598,35 @@
     }
 
     function openAdminPanel() {
-      const data = JSON.parse(localStorage.getItem('ratecard_data_v3')) || defaultData;
+      document.getElementById('set-font').value = currentData.font || "'Poppins', sans-serif";
+      document.getElementById('set-bg-url').value = currentData.bgUrl || '';
+      document.getElementById('set-card-bg').value = currentData.cardBg || '#ffffff';
+      document.getElementById('set-profile-url').value = currentData.profileUrl || '';
       
-      document.getElementById('set-font').value = data.font || "'Poppins', sans-serif";
-      document.getElementById('set-bg-url').value = data.bgUrl || '';
-      document.getElementById('set-card-bg').value = data.cardBg || '#ffffff';
-      document.getElementById('set-profile-url').value = data.profileUrl || '';
-      
-      document.getElementById('set-fb-price').value = data.fbPrice || '';
-      document.getElementById('set-tt-price').value = data.ttPrice || '';
-      document.getElementById('set-ig-price').value = data.igPrice || '';
-      document.getElementById('set-reels-price').value = data.reelsPrice || '';
-      document.getElementById('set-story-price').value = data.storyPrice || '';
-      document.getElementById('set-all-price').value = data.allPrice || '';
+      document.getElementById('set-fb-price').value = currentData.fbPrice || '';
+      document.getElementById('set-tt-price').value = currentData.ttPrice || '';
+      document.getElementById('set-ig-price').value = currentData.igPrice || '';
+      document.getElementById('set-reels-price').value = currentData.reelsPrice || '';
+      document.getElementById('set-story-price').value = currentData.storyPrice || '';
+      document.getElementById('set-all-price').value = currentData.allPrice || '';
 
-      document.getElementById('set-fb-name').value = data.fbName || '';
-      document.getElementById('set-fb-link').value = data.fbLink || '';
-      document.getElementById('set-tt-name').value = data.ttName || '';
-      document.getElementById('set-tt-link').value = data.ttLink || '';
-      document.getElementById('set-ig-name').value = data.igName || '';
-      document.getElementById('set-ig-link').value = data.igLink || '';
+      document.getElementById('set-fb-name').value = currentData.fbName || '';
+      document.getElementById('set-fb-link').value = currentData.fbLink || '';
+      document.getElementById('set-tt-name').value = currentData.ttName || '';
+      document.getElementById('set-tt-link').value = currentData.ttLink || '';
+      document.getElementById('set-ig-name').value = currentData.igName || '';
+      document.getElementById('set-ig-link').value = currentData.igLink || '';
 
-      document.getElementById('set-notepad').value = data.notepad || '';
+      document.getElementById('set-notepad').value = currentData.notepad || '';
 
       openModal('modal-admin');
     }
 
-    function saveAdminSettings() {
-      const updatedData = {
-        font: document.getElementById('set-font').value,
-        bgUrl: document.getElementById('set-bg-url').value,
-        cardBg: document.getElementById('set-card-bg').value,
-        profileUrl: document.getElementById('set-profile-url').value || defaultData.profileUrl,
-        fbPrice: document.getElementById('set-fb-price').value || '0',
-        ttPrice: document.getElementById('set-tt-price').value || '0',
-        igPrice: document.getElementById('set-ig-price').value || '0',
-        reelsPrice: document.getElementById('set-reels-price').value || '0',
-        storyPrice: document.getElementById('set-story-price').value || '0',
-        allPrice: document.getElementById('set-all-price').value || '0',
-        fbName: document.getElementById('set-fb-name').value || 'Facebook',
-        fbLink: document.getElementById('set-fb-link').value || '#',
-        ttName: document.getElementById('set-tt-name').value || 'TikTok',
-        ttLink: document.getElementById('set-tt-link').value || '#',
-        igName: document.getElementById('set-ig-name').value || 'Instagram',
-        igLink: document.getElementById('set-ig-link').value || '#',
-        notepad: document.getElementById('set-notepad').value || 'Tidak ada catatan.',
-      };
-
-      localStorage.setItem('ratecard_data_v3', JSON.stringify(updatedData));
-      
-      loadData();
-      closeModal('modal-admin');
-      alert('Settingan Font & Dashboard Berhasil Disimpan!');
-    }
-
     window.onclick = function(event) {
-        if (event.target.className === 'modal show') {
-            event.target.classList.remove('show');
-            setTimeout(() => event.target.style.display = 'none', 300);
-        }
+      if (event.target.className === 'modal show') {
+        event.target.classList.remove('show');
+        setTimeout(() => event.target.style.display = 'none', 300);
+      }
     }
 
     loadData();
