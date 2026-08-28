@@ -539,20 +539,30 @@
     }
 
     document.getElementById('set-profile-file').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        if (file.size > 2 * 1024 * 1024) {
-          alert("Ukuran file terlalu besar (Maks 2MB). Gunakan Link URL foto untuk hasil terbaik.");
-          this.value = "";
-          return;
-        }
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-          document.getElementById('set-profile-url').value = evt.target.result;
-        }
-        reader.readAsDataURL(file);
-      }
-    });
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const img = new Image();
+      img.src = evt.target.result;
+      img.onload = function() {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 300;
+        const scaleFactor = MAX_WIDTH / img.width;
+        
+        canvas.width = MAX_WIDTH;
+        canvas.height = img.height * scaleFactor;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+        document.getElementById('set-profile-url').value = compressedBase64;
+      };
+    };
+    reader.readAsDataURL(file);
+  }
+});
 
     function openModal(id) {
       const modal = document.getElementById(id);
