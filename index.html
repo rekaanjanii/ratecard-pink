@@ -577,13 +577,13 @@
 }
 
 async function submitLogin() {
-  const u = document.getElementById('login-user').value;
-  const p = document.getElementById('login-pass').value;
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value.trim();
 
   const uHash = await hashText(u);
   const pHash = await hashText(p);
 
-  const targetUserHash = "6d3c3f7cb49ffae2d5d8cbb624957e84128f731ea11c1b3f947ee19124be3bf8";
+  const targetUserHash = "0bbd8aee3a6503c58e7bb6cd6ae5ad64aa749f76a5996fbe5ed79a02fb4d528b";
   const targetPassHash = "9624467515451270222079f72782e3c03565f3f0196720d2936718d0d571d889";
 
   if (uHash === targetUserHash && pHash === targetPassHash) {
