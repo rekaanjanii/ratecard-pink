@@ -568,25 +568,11 @@
     
     function openLogin() { openModal('modal-login'); }
 
-    async function hashText(text) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(text);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-async function submitLogin() {
+    function submitLogin() {
   const u = document.getElementById('login-user').value.trim();
   const p = document.getElementById('login-pass').value.trim();
 
-  const uHash = await hashText(u);
-  const pHash = await hashText(p);
-
-  const targetUserHash = "0bbd8aee3a6503c58e7bb6cd6ae5ad64aa749f76a5996fbe5ed79a02fb4d528b";
-  const targetPassHash = "9624467515451270222079f72782e3c03565f3f0196720d2936718d0d571d889";
-
-  if (uHash === targetUserHash && pHash === targetPassHash) {
+  if (u === 'rekaanjani123' && p === '12345reka') {
     sessionStorage.setItem('isAdminLoggedIn', 'true');
     closeModal('modal-login');
     checkAdminSession();
