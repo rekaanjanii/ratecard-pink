@@ -81,23 +81,11 @@
       overflow: hidden;
     }
 
-    .container::before {
-      content: '';
-      position: absolute;
-      top: -50px;
-      right: -50px;
-      width: 150px;
-      height: 150px;
-      background: rgba(228, 161, 169, 0.1);
-      border-radius: 50%;
-      z-index: 0;
-    }
-
     .header-title {
       text-align: center;
       font-size: 2.5rem;
       font-weight: 800;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -120,9 +108,11 @@
       50% { transform: translateY(-10px) rotate(5deg); }
     }
 
+    /* --- PROFIL & NAMA PROFIL --- */
     .profile-section {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       margin-bottom: 35px;
       position: relative;
       z-index: 1;
@@ -139,6 +129,15 @@
     }
     
     .profile-img:hover { transform: scale(1.05); }
+
+    .profile-name {
+      margin-top: 15px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary-text);
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
 
     .rate-grid {
       display: grid;
@@ -168,10 +167,9 @@
       border-color: rgba(228, 161, 169, 0.3);
     }
 
-    /* --- PERBAIKAN LOGO SOSMED (SEJAJAR & ANIMASI BERGERAK) --- */
     .rate-platform {
       display: flex;
-      align-items: center; /* Menyejajarkan logo dan teks tepat di tengah */
+      align-items: center;
       gap: 12px;
       font-weight: 700;
       font-size: 1rem;
@@ -187,7 +185,6 @@
       transition: transform 0.3s ease-in-out;
     }
 
-    /* Animasi pergerakan logo saat kartu disentuh/disorot */
     .rate-card:hover .rate-platform i {
       transform: translateY(-3px) scale(1.2) rotate(8deg);
     }
@@ -244,7 +241,6 @@
       border-color: rgba(228, 161, 169, 0.2);
     }
 
-    /* Animasibergerak ikon pada Tombol Sosial Media */
     .social-btn:hover i {
       transform: scale(1.25) rotate(-10deg);
     }
@@ -338,26 +334,10 @@
     @media (max-width: 600px) {
       .container { padding: 25px; border-radius: 20px; }
       .header-title { font-size: 1.8rem; }
-      .profile-img { 
-        width: 170px; 
-        height: 170px; 
-        cursor: pointer; 
-        transition: transform 0.2s ease;
-      }
-      .profile-img:hover {
-        transform: scale(1.05);
-      }
+      .profile-img { width: 140px; height: 140px; }
+      .profile-name { font-size: 1.3rem; }
       .rate-grid { grid-template-columns: 1fr; }
       .rate-price { font-size: 1.2rem; }
-    }
-
-    .container::before,
-    .container::after,
-    [class*="circle"],
-    [class*="decor"] {
-      display: none !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
     }
   </style>
 </head>
@@ -374,8 +354,10 @@
       <span>RATE CARD</span>
     </div>
 
+    <!-- AREA FOTO & NAMA PROFIL -->
     <div class="profile-section">
       <img id="view-profile" src="https://via.placeholder.com/150" alt="Profile" class="profile-img">
+      <div id="view-profile-name" class="profile-name">Nama Profil</div>
     </div>
 
     <div class="rate-grid">
@@ -433,6 +415,7 @@
     </div>
   </div>
 
+  <!-- MODAL ADMIN CONTROL PANEL -->
   <div id="modal-admin" class="modal">
     <div class="modal-content">
       <h3>Setting Dashboard</h3>
@@ -463,7 +446,8 @@
       <div class="form-group"><label>Warna Card Dashboard</label><input type="color" id="set-card-bg" value="#ffffff"></div>
 
       <h4>Profil</h4>
-      <div class="form-group"><label>URL Foto Profil</label><input type="text" id="set-profile-url" placeholder="Https://..."></div>
+      <div class="form-group"><label>Nama Profil</label><input type="text" id="set-profile-name" placeholder="Masukkan Nama Profil"></div>
+      <div class="form-group"><label>URL Foto Profil</label><input type="text" id="set-profile-url" placeholder="https://..."></div>
       <div class="form-group"><label>Atau Unggah Foto (Lokal)</label><input type="file" id="set-profile-file" accept="image/*"></div>
 
       <h4>Setting Harga (Rp)</h4>
@@ -518,6 +502,8 @@
         document.body.style.fontFamily = currentData.font || "'Poppins', sans-serif";
 
         document.getElementById('view-profile').src = currentData.profileUrl || 'https://via.placeholder.com/150';
+        document.getElementById('view-profile-name').innerText = currentData.profileName || 'Nama Profil';
+
         document.getElementById('view-fb-price').innerText = 'Rp. ' + (currentData.fbPrice || '0');
         document.getElementById('view-tt-price').innerText = 'Rp. ' + (currentData.ttPrice || '0');
         document.getElementById('view-ig-price').innerText = 'Rp. ' + (currentData.igPrice || '0');
@@ -543,6 +529,7 @@
         font: document.getElementById('set-font').value,
         bgUrl: document.getElementById('set-bg-url').value,
         cardBg: document.getElementById('set-card-bg').value,
+        profileName: document.getElementById('set-profile-name').value || 'Nama Profil',
         profileUrl: document.getElementById('set-profile-url').value,
         fbPrice: document.getElementById('set-fb-price').value || '0',
         ttPrice: document.getElementById('set-tt-price').value || '0',
@@ -649,6 +636,7 @@
       document.getElementById('set-font').value = currentData.font || "'Poppins', sans-serif";
       document.getElementById('set-bg-url').value = currentData.bgUrl || '';
       document.getElementById('set-card-bg').value = currentData.cardBg || '#ffffff';
+      document.getElementById('set-profile-name').value = currentData.profileName || '';
       document.getElementById('set-profile-url').value = currentData.profileUrl || '';
       
       document.getElementById('set-fb-price').value = currentData.fbPrice || '';
