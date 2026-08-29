@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elegant Rate Card Dashboard</title>
+  <title>Rate Card Dashboard - Profile Customizable</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,6 +21,11 @@
       --shadow-soft: 0 10px 30px rgba(228, 161, 169, 0.15);
       --glass-bg: rgba(255, 255, 255, 0.5);
       --custom-font: 'Poppins', sans-serif;
+      
+      /* Dynamic Profile Name Styling Variables */
+      --profile-name-font: 'Poppins', sans-serif;
+      --profile-name-size: 1.6rem;
+      --profile-name-color: #4a4a4a;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
@@ -132,11 +137,13 @@
 
     .profile-name {
       margin-top: 15px;
-      font-size: 1.6rem;
+      font-family: var(--profile-name-font);
+      font-size: var(--profile-name-size);
+      color: var(--profile-name-color);
       font-weight: 700;
-      color: var(--primary-text);
       text-align: center;
       letter-spacing: 0.5px;
+      transition: all 0.3s ease;
     }
 
     .rate-grid {
@@ -335,7 +342,6 @@
       .container { padding: 25px; border-radius: 20px; }
       .header-title { font-size: 1.8rem; }
       .profile-img { width: 140px; height: 140px; }
-      .profile-name { font-size: 1.3rem; }
       .rate-grid { grid-template-columns: 1fr; }
       .rate-price { font-size: 1.2rem; }
     }
@@ -420,9 +426,9 @@
     <div class="modal-content">
       <h3>Setting Dashboard</h3>
       
-      <h4>Tampilan & Font Text</h4>
+      <h4>Tampilan & Font Utama</h4>
       <div class="form-group">
-        <label>Pilihan Font Teks Dashboard</label>
+        <label>Pilihan Font Teks Utama Dashboard</label>
         <select id="set-font">
           <optgroup label="Modern & Clean">
             <option value="'Poppins', sans-serif">Poppins (Modern Clean)</option>
@@ -445,8 +451,41 @@
       <div class="form-group"><label>URL Wallpaper Background</label><input type="text" id="set-bg-url" placeholder="https://image-link.com/bg.jpg"></div>
       <div class="form-group"><label>Warna Card Dashboard</label><input type="color" id="set-card-bg" value="#ffffff"></div>
 
-      <h4>Profil</h4>
+      <h4>Pengaturan Nama Profil</h4>
       <div class="form-group"><label>Nama Profil</label><input type="text" id="set-profile-name" placeholder="Masukkan Nama Profil"></div>
+      <div class="form-group">
+        <label>Font Nama Profil</label>
+        <select id="set-profile-font">
+          <optgroup label="Modern & Clean">
+            <option value="'Poppins', sans-serif">Poppins</option>
+            <option value="'Quicksand', sans-serif">Quicksand</option>
+            <option value="'Montserrat', sans-serif">Montserrat</option>
+          </optgroup>
+          <optgroup label="Elegant & Classy">
+            <option value="'Playfair Display', serif">Playfair Display</option>
+            <option value="'Lora', serif">Lora</option>
+          </optgroup>
+          <optgroup label="Estetis & Handcrafted">
+            <option value="'Dancing Script', cursive">Dancing Script</option>
+            <option value="'Great Vibes', cursive">Great Vibes</option>
+            <option value="'Pacifico', cursive">Pacifico</option>
+            <option value="'Sacramento', cursive">Sacramento</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Ukuran Teks Nama Profil</label>
+        <select id="set-profile-size">
+          <option value="1.2rem">Kecil (1.2rem)</option>
+          <option value="1.6rem">Sedang (1.6rem)</option>
+          <option value="2.0rem">Besar (2.0rem)</option>
+          <option value="2.5rem">Sangat Besar (2.5rem)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Warna Teks Nama Profil</label>
+        <input type="color" id="set-profile-color" value="#4a4a4a">
+      </div>
       <div class="form-group"><label>URL Foto Profil</label><input type="text" id="set-profile-url" placeholder="https://..."></div>
       <div class="form-group"><label>Atau Unggah Foto (Lokal)</label><input type="file" id="set-profile-file" accept="image/*"></div>
 
@@ -501,8 +540,12 @@
         document.documentElement.style.setProperty('--custom-font', currentData.font || "'Poppins', sans-serif");
         document.body.style.fontFamily = currentData.font || "'Poppins', sans-serif";
 
+        // Dynamic Profile Settings
         document.getElementById('view-profile').src = currentData.profileUrl || 'https://via.placeholder.com/150';
         document.getElementById('view-profile-name').innerText = currentData.profileName || 'Nama Profil';
+        document.documentElement.style.setProperty('--profile-name-font', currentData.profileFont || "'Poppins', sans-serif");
+        document.documentElement.style.setProperty('--profile-name-size', currentData.profileSize || '1.6rem');
+        document.documentElement.style.setProperty('--profile-name-color', currentData.profileColor || '#4a4a4a');
 
         document.getElementById('view-fb-price').innerText = 'Rp. ' + (currentData.fbPrice || '0');
         document.getElementById('view-tt-price').innerText = 'Rp. ' + (currentData.ttPrice || '0');
@@ -530,6 +573,9 @@
         bgUrl: document.getElementById('set-bg-url').value,
         cardBg: document.getElementById('set-card-bg').value,
         profileName: document.getElementById('set-profile-name').value || 'Nama Profil',
+        profileFont: document.getElementById('set-profile-font').value || "'Poppins', sans-serif",
+        profileSize: document.getElementById('set-profile-size').value || "1.6rem",
+        profileColor: document.getElementById('set-profile-color').value || "#4a4a4a",
         profileUrl: document.getElementById('set-profile-url').value,
         fbPrice: document.getElementById('set-fb-price').value || '0',
         ttPrice: document.getElementById('set-tt-price').value || '0',
@@ -636,7 +682,11 @@
       document.getElementById('set-font').value = currentData.font || "'Poppins', sans-serif";
       document.getElementById('set-bg-url').value = currentData.bgUrl || '';
       document.getElementById('set-card-bg').value = currentData.cardBg || '#ffffff';
+      
       document.getElementById('set-profile-name').value = currentData.profileName || '';
+      document.getElementById('set-profile-font').value = currentData.profileFont || "'Poppins', sans-serif";
+      document.getElementById('set-profile-size').value = currentData.profileSize || "1.6rem";
+      document.getElementById('set-profile-color').value = currentData.profileColor || "#4a4a4a";
       document.getElementById('set-profile-url').value = currentData.profileUrl || '';
       
       document.getElementById('set-fb-price').value = currentData.fbPrice || '';
