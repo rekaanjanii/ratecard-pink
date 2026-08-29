@@ -327,11 +327,15 @@
   }
   .rate-grid { grid-template-columns: 1fr; }
   .rate-price { font-size: 1.2rem; }
+}
 
-  .container::before,
-  .container::after {
-    display: none !important;
-  }
+.container::before,
+.container::after,
+[class*="circle"],
+[class*="decor"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 </style>
 </head>
