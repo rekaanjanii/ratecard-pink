@@ -168,16 +168,29 @@
       border-color: rgba(228, 161, 169, 0.3);
     }
 
+    /* --- PERBAIKAN LOGO SOSMED (SEJAJAR & ANIMASI BERGERAK) --- */
     .rate-platform {
       display: flex;
-      align-items: center;
-      gap: 10px;
+      align-items: center; /* Menyejajarkan logo dan teks tepat di tengah */
+      gap: 12px;
       font-weight: 700;
       font-size: 1rem;
       color: var(--primary-text);
+      line-height: 1;
     }
     
-    .rate-platform i { font-size: 1.3rem; width: 25px; text-align: center;}
+    .rate-platform i { 
+      font-size: 1.4rem; 
+      width: 25px; 
+      text-align: center;
+      display: inline-block;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    /* Animasi pergerakan logo saat kartu disentuh/disorot */
+    .rate-card:hover .rate-platform i {
+      transform: translateY(-3px) scale(1.2) rotate(8deg);
+    }
 
     .rate-price {
       font-size: 1.4rem;
@@ -221,10 +234,19 @@
       border: 1px solid transparent;
     }
 
+    .social-btn i {
+      transition: transform 0.3s ease-in-out;
+    }
+
     .social-btn:hover { 
       transform: translateY(-3px);
       box-shadow: 0 6px 15px rgba(0,0,0,0.08);
       border-color: rgba(228, 161, 169, 0.2);
+    }
+
+    /* Animasibergerak ikon pada Tombol Sosial Media */
+    .social-btn:hover i {
+      transform: scale(1.25) rotate(-10deg);
     }
 
     .fa-facebook { color: #1877f2; }
@@ -317,27 +339,27 @@
       .container { padding: 25px; border-radius: 20px; }
       .header-title { font-size: 1.8rem; }
       .profile-img { 
-    width: 170px; 
-    height: 170px; 
-    cursor: pointer; 
-    transition: transform 0.2s ease;
-  }
-  .profile-img:hover {
-    transform: scale(1.05);
-  }
-  .rate-grid { grid-template-columns: 1fr; }
-  .rate-price { font-size: 1.2rem; }
-}
+        width: 170px; 
+        height: 170px; 
+        cursor: pointer; 
+        transition: transform 0.2s ease;
+      }
+      .profile-img:hover {
+        transform: scale(1.05);
+      }
+      .rate-grid { grid-template-columns: 1fr; }
+      .rate-price { font-size: 1.2rem; }
+    }
 
-.container::before,
-.container::after,
-[class*="circle"],
-[class*="decor"] {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-}
-</style>
+    .container::before,
+    .container::after,
+    [class*="circle"],
+    [class*="decor"] {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -471,7 +493,6 @@
   </div>
 
   <script>
-    // GANTI BAGIAN INI DENGAN DATA DARI JSONBIN.IO ANDA
     const BIN_ID = '6a911934da38895dfe1adf2f';
     const MASTER_KEY = '$2a$10$RToIDZQyfCwAmmFIgopn6O1Nf2lOWMZy5cE7zwXLMHjagMg0EP5I.';
 
@@ -556,30 +577,30 @@
     }
 
     document.getElementById('set-profile-file').addEventListener('change', function(e) {
-  const file = e.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(evt) {
-      const img = new Image();
-      img.src = evt.target.result;
-      img.onload = function() {
-        const canvas = document.createElement('canvas');
-        const MAX_WIDTH = 300;
-        const scaleFactor = MAX_WIDTH / img.width;
-        
-        canvas.width = MAX_WIDTH;
-        canvas.height = img.height * scaleFactor;
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          const img = new Image();
+          img.src = evt.target.result;
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const MAX_WIDTH = 300;
+            const scaleFactor = MAX_WIDTH / img.width;
+            
+            canvas.width = MAX_WIDTH;
+            canvas.height = img.height * scaleFactor;
 
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
-        document.getElementById('set-profile-url').value = compressedBase64;
-      };
-    };
-    reader.readAsDataURL(file);
-  }
-});
+            const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+            document.getElementById('set-profile-url').value = compressedBase64;
+          };
+        };
+        reader.readAsDataURL(file);
+      }
+    });
 
     function openModal(id) {
       const modal = document.getElementById(id);
@@ -596,20 +617,20 @@
     function openLogin() { openModal('modal-login'); }
 
     function submitLogin() {
-  const u = document.getElementById('login-user').value.trim();
-  const p = document.getElementById('login-pass').value.trim();
+      const u = document.getElementById('login-user').value.trim();
+      const p = document.getElementById('login-pass').value.trim();
 
-  if (u === 'rekaanjani123' && p === '12345reka') {
-    sessionStorage.setItem('isAdminLoggedIn', 'true');
-    closeModal('modal-login');
-    checkAdminSession();
-    openAdminPanel();
-    document.getElementById('login-user').value = '';
-    document.getElementById('login-pass').value = '';
-  } else {
-    alert('Maaf, Username atau Password Salah!');
-  }
-}
+      if (u === 'rekaanjani123' && p === '12345reka') {
+        sessionStorage.setItem('isAdminLoggedIn', 'true');
+        closeModal('modal-login');
+        checkAdminSession();
+        openAdminPanel();
+        document.getElementById('login-user').value = '';
+        document.getElementById('login-pass').value = '';
+      } else {
+        alert('Maaf, Username atau Password Salah!');
+      }
+    }
 
     function logout() {
       sessionStorage.removeItem('isAdminLoggedIn');
